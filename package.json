@@ -32,12 +32,15 @@
     "helmet": "^7.1.0",
     "joi": "^17.13.1",
     "jsonwebtoken": "^9.0.2",
-    "node": "^20.14.0",
+    "mariadb": "^3.3.0",
+    "mysql2": "^3.9.8",
+    "oracledb": "^6.5.1",
     "pg": "^8.11.5",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.3",
     "sequelize-typescript": "^2.1.6",
-    "uuid": "^9.0.1",
-    "vite": "^5.2.12"
+    "sqlite3": "^5.1.7",
+    "tedious": "^18.2.0",
+    "uuid": "^9.0.1"
   }
 }
