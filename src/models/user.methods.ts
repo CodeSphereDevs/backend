@@ -1,25 +1,30 @@
 import { v4 as uuidv4 } from "uuid";
-import { UserSchema } from "./user.schema";
+import { UserModel } from "./user.schema";
 import { User } from "../types/user";
-import { Model } from "sequelize";
 
 const getByName = async ({username}:{username: string}) => {
   try {
-    return await UserSchema.findOne({ where: { username } });
+    return await UserModel.findOne({ where: { username:username } });
   } catch (error) {
     console.log(error);
     return null;
   }
 };
 
-const create = async ({ username, password, email }: User) : Promise<any>=> {
+const create = async ({ username, password, email }: User) :Promise<string | any > => {
   try {;
-    const user = { username, password, email, id:uuidv4() };
-    const userId = await UserSchema.create(user);
+    const user = { username, password, email, id: uuidv4() };
+    const userId = await UserModel.create(user);
     return userId;
   } catch (error) {
     return { error };
   }
 };
 
-export const UserModel = { getByName, create };
+const getAll = async () => {
+  try{
+    return await UserModel.findAll();
+  }catch(error){return null;}
+}
+
+export const UserMethods= { getByName, create, getAll };
