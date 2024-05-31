@@ -20,7 +20,7 @@ const login = async (req: Request, res: Response<ServerResponse>) => {
       return res.status(400).json({ success: false, message: "Nombre de usuario o contraseña incorrecta" });
     }
 
-    const coparePass = await comparePasswords(validation.password, user.password);
+    const coparePass = await comparePasswords(validation.password, user.password!);
 
   } catch (error) {
     console.log(error);

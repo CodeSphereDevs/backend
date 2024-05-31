@@ -21,4 +21,10 @@ const create = async ({ username, password, email }: User) :Promise<string | any
   }
 };
 
-export const UserMethods= { getByName, create };
+const getAll = async () => {
+  try{
+    return await UserModel.findAll();
+  }catch(error){return null;}
+}
+
+export const UserMethods= { getByName, create, getAll };

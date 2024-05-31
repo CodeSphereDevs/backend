@@ -28,7 +28,7 @@ import { UUID } from "node:crypto";
 class UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
   declare id: string;
   declare username: string;
-  declare password: string;
+  declare password?: string;
   declare email: string;
   declare urlAvatar: CreationOptional<string>;
   declare createdAt: CreationOptional<Date>;

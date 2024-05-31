@@ -1,0 +1,29 @@
+@server=http://localhost:8080/api
+
+GET {{server}}/users/
+
+###
+
+GET {{server}}/users/Ebanx3
+
+###
+
+POST {{server}}/auth/signup
+Content-Type: application/json
+
+{
+    "username":"Ebanx3",
+    "password":"asdasdX4",
+    "email":"esteban2santos@gmail.com"
+}
+
+### 
+
+POST {{server}}/auth/login
+Content-Type: application/json
+
+{
+    "username":"Ebanx3",
+    "password":"asdasdX$",
+    "email":"esteban2santos@gmail.com"
+}
