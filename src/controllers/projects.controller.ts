@@ -1,13 +1,11 @@
 import { ServerResponse } from "../types/serverResponse";
 import { Request,Response } from "express";
-import { ProjectMethods } from "../models/project.methods";
+import { ProjectModel } from "../models/project.methods";
 
-
-
-const getAllProjects = async (req: Request ,res:Response<ServerResponse> ) => {
+const showProjects = async (req: Request ,res:Response<ServerResponse> ) => {
 
     try {
-        const result = await ProjectMethods.getAllProjects();
+        const result = await ProjectModel.getAllProjects();
         res.json({success: true, message:"", data: result })
 
     } catch (error) {
@@ -18,10 +16,10 @@ const getAllProjects = async (req: Request ,res:Response<ServerResponse> ) => {
 
 }
 
-const getByName = async (req: Request ,res:Response<ServerResponse> ) => {
+const detailProject = async (req: Request ,res:Response<ServerResponse> ) => {
     const { name } = req.params
     try {
-        const result = await ProjectMethods.getByName({name});
+        const result = await ProjectModel.getByName({name});
         res.json({success: true, message:"", data: result })
 
     } catch (error) {
@@ -32,4 +30,4 @@ const getByName = async (req: Request ,res:Response<ServerResponse> ) => {
 }
 
 
-export const projectController = { getAllProjects , getByName}
+export const projectController = { showProjects , detailProject}
