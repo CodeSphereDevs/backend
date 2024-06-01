@@ -13,7 +13,6 @@ router.use("/auth", AuthRouter)
 router.use("/projects",ProjectRouter)
 
 
-router.use("/auth", AuthRouter);
 router.use("/users", UsersRouter);
 
 
