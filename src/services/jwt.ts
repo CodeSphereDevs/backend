@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import config from "../config";
-import { User } from "../types/user";
+import { UserModel } from "../models/user.schema";
 
-const createToken = (user: User) => {
+const createToken = (user: UserModel) => {
   try {
     return jwt.sign(
       {

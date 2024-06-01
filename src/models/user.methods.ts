@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { UserModel } from "./user.schema";
 import { User } from "../types/user";
+import { hashPassword } from "../services/bcrypt";
 
 const getByName = async ({username}:{username: string}) => {
   try {
@@ -13,7 +14,8 @@ const getByName = async ({username}:{username: string}) => {
 
 const create = async ({ username, password, email }: User) :Promise<string | any > => {
   try {;
-    const user = { username, password, email, id: uuidv4() };
+    const pass = await hashPassword(password)
+    const user = { username, password: pass, email, id: uuidv4() };
     const userId = await UserModel.create(user);
     return userId;
   } catch (error) {
