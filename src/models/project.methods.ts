@@ -1,10 +1,9 @@
-import { Model } from "sequelize";
-import { Project } from "../types/project";
+import { Project } from "../types/project.type";
 import { Where } from "sequelize/types/utils";
 
 const getAllProjects= async () => {
       /* try {
-        return await ProjectSchema.findAll();
+        return await ProjectModel.findAll();
           } catch (error) {
         console.log(error)
       } */
@@ -12,7 +11,7 @@ const getAllProjects= async () => {
 
 const getByName = async ({name}: {name: String} ) => {
     /* try {
-        return await ProjectSchema.findOne({ Where: {name}})
+        return await ProjectModel.findOne({ Where: {name}})
     } catch (error) {
         console.log(error)
         return null;
@@ -21,4 +20,4 @@ const getByName = async ({name}: {name: String} ) => {
 
 
 
-export const ProjectModel = { getAllProjects , getByName }
+export const ProjectMethods = { getAllProjects , getByName }
