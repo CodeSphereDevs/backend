@@ -16,6 +16,8 @@ class PostModel extends Model<
  declare author: string;
  declare content: string;
  declare likes:CreationOptional <number>;
+ declare createdAt: CreationOptional<Date>;
+ declare updatedAt: CreationOptional<Date>;
     
 }
 
@@ -40,7 +42,15 @@ PostModel.init({
     likes:{
         type:DataType.STRING,
         allowNull: true,
-    }
+    },
+    createdAt:{
+        type: DataType.DATE,
+        defaultValue: DataType.NOW
+    },
+    updatedAt:{
+        type: DataType.DATE,
+        defaultValue: DataType.NOW
+    },
 },{
     sequelize: sequelize,
     tableName: "post"
