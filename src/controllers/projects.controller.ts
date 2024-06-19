@@ -1,6 +1,9 @@
 import { ServerResponse } from "../types/serverResponse";
 import { Request,Response } from "express";
 import { ProjectMethods } from "../models/project.methods";
+
+
+
 const getAllProjects = async (req: Request ,res:Response<ServerResponse> ) => {
 
     try {

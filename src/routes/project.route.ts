@@ -3,8 +3,8 @@ import { projectController } from "../controllers/projects.controller";
 
 const router = Router(); 
 
-router.get("/", projectController.showProjects)
-router.get("/:projectname",projectController.detailProject)
+router.get("/", projectController.getAllProjects)
+router.get("/:projectname",projectController.getByName)
 
 
 
