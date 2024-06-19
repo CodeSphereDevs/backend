@@ -23,6 +23,12 @@ POST {{server}}/auth/login
 Content-Type: application/json
 
 {
-    "username":"Ebanx3",
-    "password":"asdasdX$",
+    "username":"Ebanx2",
+    "password":"assssaaaX4"
 }
+
+###
+PATCH {{server}}/users/update
+Content-Type: application/json
+
+{}

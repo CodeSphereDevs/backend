@@ -22,12 +22,10 @@ const login = async (req: Request, res: Response<ServerResponse>) => {
     });
 
     if (!user) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Nombre de usuario o contraseña incorrecta",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Nombre de usuario o contraseña incorrecta",
+      });
     }
 
     const comparePass = await comparePasswords(
@@ -36,12 +34,10 @@ const login = async (req: Request, res: Response<ServerResponse>) => {
     );
 
     if (!comparePass) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Nombre de usuario o contraseña incorrecta",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Nombre de usuario o contraseña incorrecta",
+      });
     }
 
     const token = createToken(user);
@@ -51,13 +47,11 @@ const login = async (req: Request, res: Response<ServerResponse>) => {
       maxAge: 15 * 24 * 60 * 60 * 1000,
       secure: true,
     });
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Login correcto",
-        data: removePass(user),
-      });
+    res.status(200).json({
+      success: true,
+      message: "Login correcto",
+      data: removePass(user),
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json();
@@ -89,17 +83,23 @@ const signup = async (req: Request, res: Response<ServerResponse>) => {
       return res.status(400).json({ success: false, message: "Error" });
     }
 
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Usuario creado",
-        data: { userId: result.id },
-      });
+    res.status(201).json({
+      success: true,
+      message: "Usuario creado",
+      data: { userId: result.id },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
-export const AuthController = { login, signup };
+const logout = async (req: Request, res: Response<ServerResponse>) => {
+  try {
+    res.clearCookie("codeSphereToken").status(200).json({success:true, message:"logout correcto"})
+  } catch {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const AuthController = { login, signup, logout };
