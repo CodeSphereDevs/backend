@@ -3,3 +3,4 @@ export type ServerResponse = {
     message: string;
     data?: any;
 }
+

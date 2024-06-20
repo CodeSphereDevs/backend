@@ -1,19 +1,35 @@
 import { v4 as uuidv4 } from "uuid";
 import { UserModel } from "./user.schema";
 import { User } from "../types/user";
+import { hashPassword } from "../services/bcrypt";
 
-const getByName = async ({username}:{username: string}) => {
+const getByName = async ({ username }: { username: string }) => {
   try {
-    return await UserModel.findOne({ where: { username:username } });
+    return await UserModel.findOne({ where: { username: username } });
   } catch (error) {
     console.log(error);
     return null;
   }
 };
 
-const create = async ({ username, password, email }: User) :Promise<string | any > => {
-  try {;
-    const user = { username, password, email, id: uuidv4() };
+const create = async ({
+  username,
+  password,
+  email,
+}: User): Promise<string | any> => {
+  try {
+    const pass = await hashPassword(password);
+    const user = {
+      username,
+      password: pass,
+      email,
+      id: uuidv4(),
+      projects: [],
+      posts: [],
+      stats: { projects: 0, posts: 0 },
+      technologies: [],
+      links:[]
+    };
     const userId = await UserModel.create(user);
     return userId;
   } catch (error) {
@@ -22,9 +38,19 @@ const create = async ({ username, password, email }: User) :Promise<string | any
 };
 
 const getAll = async () => {
-  try{
+  try {
     return await UserModel.findAll();
-  }catch(error){return null;}
-}
+  } catch (error) {
+    return null;
+  }
+};
 
-export const UserMethods= { getByName, create, getAll };
+// const updateUser = async ({username, }) => {
+//   try{
+//     await UserModel.update({username: userData},{where: {username: }})
+//   }catch(error){
+//     return null;
+//   }
+// }
+
+export const UserMethods = { getByName, create, getAll };
