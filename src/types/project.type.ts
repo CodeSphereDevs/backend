@@ -1,11 +1,4 @@
 export type Project = {
-<<<<<<< HEAD
-    id?: string;
-    name: string;
-    author: string;
-    collaborators: object;
-}
-=======
     id: string;
     name: string;
     details: string;
@@ -17,4 +10,3 @@ export type Project = {
 
 }
 
->>>>>>> main
