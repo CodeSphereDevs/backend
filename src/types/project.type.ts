@@ -1,11 +1,11 @@
 export type Project = {
     id: string;
-    name: string;
+    projectName: string;
     details: string;
-    projectLeadr: string;
-    memberList: string[];
-    pendingMemberList?: string[];
-    tecgnologies: string[];
+    projectLeader: string;
+    membersList: string[];
+    pendingMembersList?: string[];
+    technologies: string[];
     status: string;
 
 }

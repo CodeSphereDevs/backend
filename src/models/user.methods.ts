@@ -5,7 +5,7 @@ import { hashPassword } from "../services/bcrypt";
 
 const getByName = async ({ username }: { username: string }) => {
   try {
-    return await UserModel.findOne({ where: { username: username } });
+    return await UserModel.findOne({ where: { username } });
   } catch (error) {
     console.log(error);
     return null;

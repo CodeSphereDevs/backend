@@ -32,3 +32,6 @@ PATCH {{server}}/users/update
 Content-Type: application/json
 
 {}
+
+###
+GET {{server}}/projects/

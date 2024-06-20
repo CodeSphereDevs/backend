@@ -1,5 +1,4 @@
-import { Model, where } from "sequelize";
-import { Post } from "../types/post.type";
+
 
 
 const getAllPosts = async () => { 
@@ -43,4 +42,8 @@ const getById = async ({id}:{id: string}) => {
     } */
 }
 
-export const PostMethods = { getAllPosts,sortPost ,orderPost, getById }
+const create = async () => {
+
+}
+
+export const PostMethods = { getAllPosts,sortPost ,orderPost, getById, create }
