@@ -17,9 +17,15 @@ const loginSchema = Joi.object({
     .required(),
 });
 
-const schemas = { login: loginSchema, signup: signupSchema };
+const createProjectSchema = Joi.object({
+  projectName: Joi.string().min(5).max(60).required(),
+  details: Joi.string().required(),
+  technologies: Joi.array().items(Joi.string()).min(1).max(5).required(),
+});
 
-type Schemas = "login" | "signup";
+const schemas = { login: loginSchema, signup: signupSchema, createProject: createProjectSchema };
+
+type Schemas = "login" | "signup" | "createProject";
 
 export const validateData = async ({
   schema,

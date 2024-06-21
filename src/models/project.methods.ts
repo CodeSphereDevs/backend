@@ -19,7 +19,7 @@ const getByProjectName = async ({ projectName }: { projectName: string }) => {
   }
 };
 
-const create = async ({projectLeader, projectName, details, technologies}:Project) => {
+const create = async ({projectLeader, projectName, details, technologies}:Project):Promise<string | any> => {
   try{
     const project = {
       projectLeader,

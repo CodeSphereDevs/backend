@@ -2,6 +2,7 @@ import { ServerResponse } from "../types/serverResponse";
 import { Request, Response } from "express";
 import { ProjectMethods } from "../models/project.methods";
 import { RequestWithUserData } from "../middlewares/authenticate";
+import { validateData } from "../services/joiValidation";
 
 const getAllProjects = async (req: Request, res: Response<ServerResponse>) => {
   try {
@@ -26,8 +27,25 @@ const getByName = async (req: Request, res: Response<ServerResponse>) => {
 
 const createProject = async (req: RequestWithUserData, res: Response<ServerResponse>) => {
     try{
-        console.log(req.user)
-        res.status(200).json({success:true, message:"asd"})
+        const validation = await validateData({schema: "createProject", data: req.body});
+        
+        if (validation.error === "ValidationError") {
+          return res
+            .status(400)
+            .json({ success: false, message: validation.message });
+        }
+        
+        const newProject = {...validation, projectLeader: req.user.username};
+
+        const result = await ProjectMethods.create(newProject);
+
+        if (result.error?.name === "SequelizeUniqueConstraintError") {
+          return res
+          .status(400)
+          .json({ success: false, message: "Nombre de proyecto ya usado" });
+        }
+
+        res.status(200).json({success:true, message:"Proyecto creado correctamente", data:result})
     }catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: "Server error" });
