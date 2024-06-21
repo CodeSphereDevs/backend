@@ -7,6 +7,6 @@ export type Project = {
     pendingMembersList?: string[];
     technologies: string[];
     status: string;
-
+    numMembers: number;
 }
 

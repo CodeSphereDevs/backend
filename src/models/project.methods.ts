@@ -19,24 +19,30 @@ const getByProjectName = async ({ projectName }: { projectName: string }) => {
   }
 };
 
-const create = async ({projectLeader, projectName, details, technologies}:Project):Promise<string | any> => {
-  try{
+const create = async ({
+  projectLeader,
+  projectName,
+  details,
+  technologies,
+  numMembers,
+}: Project): Promise<string | any> => {
+  try {
     const project = {
       projectLeader,
       projectName,
       details,
       technologies,
+      numMembers,
       id: uuidv4(),
       membersList: [projectLeader],
       pendingMembersList: [],
       status: "no iniciado",
-    }
+    };
     const projectId = await ProjectModel.create(project);
     return projectId;
-    
-  }catch(error){
-    return {error};
+  } catch (error) {
+    return { error };
   }
-}
+};
 
 export const ProjectMethods = { getAllProjects, getByProjectName, create };

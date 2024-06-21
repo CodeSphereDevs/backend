@@ -16,6 +16,7 @@ class ProjectModel extends Model<
   declare details: string;
   declare projectLeader: string;
   declare membersList: Array<string>;
+  declare numMembers: number;
   declare pendingMembersList: Array<string>;
   declare technologies: Array<string>;
   declare status: string;
@@ -41,6 +42,10 @@ ProjectModel.init(
     projectLeader: {
       type: DataType.STRING,
       allowNull: false,
+    },
+    numMembers:{
+      type: DataType.INTEGER,
+      allowNull:false
     },
     membersList: {
       type: DataType.ARRAY(DataType.STRING),

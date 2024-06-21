@@ -34,7 +34,7 @@ const createProject = async (req: RequestWithUserData, res: Response<ServerRespo
             .status(400)
             .json({ success: false, message: validation.message });
         }
-        
+      
         const newProject = {...validation, projectLeader: req.user.username};
 
         const result = await ProjectMethods.create(newProject);

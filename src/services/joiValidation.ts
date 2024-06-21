@@ -21,6 +21,7 @@ const createProjectSchema = Joi.object({
   projectName: Joi.string().min(5).max(60).required(),
   details: Joi.string().required(),
   technologies: Joi.array().items(Joi.string()).min(1).max(5).required(),
+  numMembers: Joi.number().min(2).max(6).required()
 });
 
 const schemas = { login: loginSchema, signup: signupSchema, createProject: createProjectSchema };
