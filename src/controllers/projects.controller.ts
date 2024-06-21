@@ -17,7 +17,6 @@ const getAllProjects = async (req: Request, res: Response<ServerResponse>) => {
 const getByName = async (req: Request, res: Response<ServerResponse>) => {
   try {
     const { projectName } = req.params;
-    console.log(projectName)
     const result = await ProjectMethods.getByProjectName({ projectName });
     res.json({ success: true, message: "", data: result });
   } catch (error) {
