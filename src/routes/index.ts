@@ -5,6 +5,7 @@ import { Router } from "express";
 import AuthRouter from "./auth";
 import ProjectRouter from "./project.route";
 import UsersRouter from "./user"
+import PostRouter from "./post.route"
 
 
 
@@ -15,6 +16,6 @@ router.use("/projects",ProjectRouter)
 
 
 router.use("/users", UsersRouter);
-router.use("/projects", ProjectsRouter);
+router.use("/posts", PostRouter);
 
 export default router;

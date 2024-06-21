@@ -1,4 +1,6 @@
+import { contentSecurityPolicy } from "helmet";
 import Joi from "joi";
+import { title } from "process";
 
 const signupSchema = Joi.object({
   username: Joi.string().alphanum().min(3).max(20).required(),
@@ -24,9 +26,16 @@ const createProjectSchema = Joi.object({
   numMembers: Joi.number().min(2).max(6).required()
 });
 
-const schemas = { login: loginSchema, signup: signupSchema, createProject: createProjectSchema };
 
-type Schemas = "login" | "signup" | "createProject";
+const createPostSchema = Joi.object({
+  title: Joi.string().min(3).max(40).required(),
+  content:Joi.string().required(),
+})
+
+
+const schemas = { login: loginSchema, signup: signupSchema, createProject: createProjectSchema, createPost: createPostSchema };
+
+type Schemas = "login" | "signup" | "createProject" | "createPost";
 
 export const validateData = async ({
   schema,

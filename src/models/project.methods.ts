@@ -12,7 +12,7 @@ const getAllProjects = async () => {
 
 const getByProjectName = async ({ projectName }: { projectName: string }) => {
   try {
-    return await ProjectModel.findOne({ where: { projectName } });
+    return await ProjectModel.findOne({ where: { projectName }});
   } catch (error) {
     console.log(error);
     return null;

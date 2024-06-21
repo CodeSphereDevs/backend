@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { PostMethods } from "../models/post.methods";
 import { ServerResponse } from "../types/serverResponse";
+import { validateData } from "../services/joiValidation";
+import { RequestWithUserData } from "../middlewares/authenticate";
 
 
 const getAllPosts = async (req: Request, res:Response<ServerResponse> ) => { 
@@ -14,6 +16,32 @@ const getAllPosts = async (req: Request, res:Response<ServerResponse> ) => {
 
 }
 
+const createPost = async (req : RequestWithUserData, res : Response<ServerResponse>) => {
+    try {
+        const validation = await validateData({ schema: "createPost", data: req.body})
+        if( validation.error === "Validation Error"){
+            return res
+              .status(400)
+              .json({ success: false, message: validation.message})
+        }
+
+        const newPost = { ...validation, author: req.user.username}
+        
+        const result = await PostMethods.create(newPost);
+
+        if(result.error?.name === "SequializeUniqueConstraintError"){
+            return res  
+                .status(400)
+                .json({ success: false, message: "Nombre del post en uso"})
+        }
+
+        res.status(200).json({ success: true, message: "Post creaco correctamente"})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({success: false , message: "Server error"})
+    }
+}
 
 
-export const postController = {getAllPosts}
+
+export const PostController = {getAllPosts, createPost}

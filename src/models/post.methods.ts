@@ -1,4 +1,6 @@
-
+import { v4 as uuidv4} from "uuid"
+import { Post } from "../types/post.type"
+import { PostModel } from "./post.schema"
 
 
 const getAllPosts = async () => { 
@@ -10,29 +12,6 @@ const getAllPosts = async () => {
 } */
 }
 
-
-const sortPost = async ({sortBy} : {sortBy: string} ) => { 
-    
-   /*  const criterio = sortBy === "transcendence" ? ['trasendence'] : ['date']
-    try {
-        return await PostModel.findAll({order: [criterio]})
-    } catch (error) {
-        console.log(error)
-        return null
-    } */
-}
-
-const orderPost = async ({ orderBy ,Date } : { orderBy: string, Date: Date}) => { 
-   /*  try {
-        const criterio = orderBy === 'ASC' ? [Date , 'ASC']  : [Date, 'DESC']
-        return await PostModel.findAll({order: [criterio]})
-    } catch (error) {
-        console.log(error)
-        return null
-    } */
-}
-
-
 const getById = async ({id}:{id: string}) => { 
    /*  try {
         return await PostModel.findOne({where: {id}})
@@ -42,8 +21,27 @@ const getById = async ({id}:{id: string}) => {
     } */
 }
 
-const create = async () => {
+const create = async ({
+    author,
+    title,
+    content
+}: Post): Promise<string | any> => {
 
+    try {
+        const post = {
+            id: uuidv4() ,
+            author,
+            title,
+            content,
+            likes: [ ]
+        }
+    
+        const postId = await PostModel.create(post);
+        return postId
+        
+    } catch (error) {
+        return { error};
+    }
 }
 
-export const PostMethods = { getAllPosts,sortPost ,orderPost, getById, create }
+export const PostMethods = { getAllPosts, getById, create }
