@@ -15,6 +15,6 @@ router.use("/projects",ProjectRouter)
 
 
 router.use("/users", UsersRouter);
-
+router.use("/projects", ProjectsRouter);
 
 export default router;

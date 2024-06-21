@@ -2,23 +2,17 @@ import { CreationOptional, InferAttributes, InferCreationAttributes, Model } fro
 import sequelize from "../services/database";
 import { DataType } from "sequelize-typescript";
 
-
-
-
-
 class PostModel extends Model<
     InferAttributes<PostModel>,
     InferCreationAttributes<PostModel>
 >{
-    
  declare id: string;
  declare title: string;
  declare author: string;
  declare content: string;
- declare likes:CreationOptional <number>;
+ declare likes: Array<string>;
  declare createdAt: CreationOptional<Date>;
  declare updatedAt: CreationOptional<Date>;
-    
 }
 
 PostModel.init({
@@ -40,7 +34,7 @@ PostModel.init({
         allowNull: false,
     },
     likes:{
-        type:DataType.STRING,
+        type:DataType.ARRAY(DataType.STRING),
         allowNull: true,
     },
     createdAt:{

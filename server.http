@@ -32,3 +32,19 @@ PATCH {{server}}/users/update
 Content-Type: application/json
 
 {}
+
+###
+GET {{server}}/projects/
+
+### 
+GET {{server}}/projects/proyecto de prueba
+
+### necesita cookie :C
+POST {{server}}/projects
+Content-Type: application/json
+
+{
+    "projectName":"proyecto de prueba",
+    "technologies": ["react"],
+    "details":"esta sería la descripcion del primero proyecto\nesto sería una segunda línea\ny esto una tercera"
+}

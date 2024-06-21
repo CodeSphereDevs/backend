@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { projectController } from "../controllers/projects.controller";
+import { ProjectController } from "../controllers/projects.controller";
+import { authenticate } from "../middlewares/authenticate";
 
-const router = Router(); 
+const router = Router();
 
-router.get("/", projectController.getAllProjects)
-router.get("/:projectname",projectController.getByName)
-
-
+router.get("/", ProjectController.getAllProjects);
+router.get("/:projectName", ProjectController.getByName);
+router.post("/", authenticate ,ProjectController.createProject);
 
 export default router;
