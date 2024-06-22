@@ -45,4 +45,37 @@ const create = async ({
   }
 };
 
-export const ProjectMethods = { getAllProjects, getByProjectName, create };
+
+const addPendingMember = async ({ projectName , username }: {projectName:string , username: string}) => {
+  try {
+
+    const project = await ProjectModel.findOne({
+      where:{projectName}
+    })
+
+    if(!project){
+      throw new Error("No existe un proyecto con ese nombre")
+    }
+    if(project.pendingMembersList.includes(username)){
+      return { status: 409,message: "El usuario ya cuenta con una solicitud para este proyecto"}
+    }
+
+    project.pendingMembersList.push(username)
+
+    const projectUpdated = await project.save();
+
+    return projectUpdated
+
+  } catch (error) {
+    return{ error};
+  }
+}
+
+
+
+
+
+
+
+
+export const ProjectMethods = { getAllProjects, getByProjectName, create , addPendingMember};

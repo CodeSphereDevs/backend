@@ -52,4 +52,24 @@ const createProject = async (req: RequestWithUserData, res: Response<ServerRespo
       }
 }
 
-export const ProjectController = { getAllProjects, getByName, createProject };
+
+
+
+const addPendingMember = async (req: RequestWithUserData, res : Response<ServerResponse>) => {
+  try {
+    const {projectName} = req.params
+    const username = req.user.username
+    const result = await ProjectMethods.addPendingMember({projectName, username})
+
+
+    if(result.status === 409){
+      res.status(409).json({success: false, message: result.message})
+    }
+
+    res.status(200).json({success: true, message: req.user, data: result})
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error"})
+  }
+}
+
+export const ProjectController = { getAllProjects, getByName, createProject, addPendingMember };
