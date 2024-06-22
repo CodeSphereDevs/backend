@@ -59,7 +59,7 @@ const createPost = async (req : RequestWithUserData, res : Response<ServerRespon
                 .json({ success: false, message: "Nombre del post en uso"})
         }
 
-        res.status(200).json({ success: true, message: "Post creaco correctamente"})
+        res.status(200).json({ success: true, message: "Post creaco correctamente", data: result})
     } catch (error) {
         console.log(error)
         res.status(500).json({success: false , message: "Server error"})
