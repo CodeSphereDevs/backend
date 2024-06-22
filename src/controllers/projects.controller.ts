@@ -25,51 +25,70 @@ const getByName = async (req: Request, res: Response<ServerResponse>) => {
   }
 };
 
-const createProject = async (req: RequestWithUserData, res: Response<ServerResponse>) => {
-    try{
-        const validation = await validateData({schema: "createProject", data: req.body});
-        
-        if (validation.error === "ValidationError") {
-          return res
-            .status(400)
-            .json({ success: false, message: validation.message });
-        }
-      
-        const newProject = {...validation, projectLeader: req.user.username};
-
-        const result = await ProjectMethods.create(newProject);
-
-        if (result.error?.name === "SequelizeUniqueConstraintError") {
-          return res
-          .status(400)
-          .json({ success: false, message: "Nombre de proyecto ya usado" });
-        }
-
-        res.status(200).json({success:true, message:"Proyecto creado correctamente", data:result})
-    }catch (error) {
-        console.log(error);
-        res.status(500).json({ success: false, message: "Server error" });
-      }
-}
-
-
-
-
-const addPendingMember = async (req: RequestWithUserData, res : Response<ServerResponse>) => {
+const createProject = async (
+  req: RequestWithUserData,
+  res: Response<ServerResponse>
+) => {
   try {
-    const {projectName} = req.params
-    const username = req.user.username
-    const result = await ProjectMethods.addPendingMember({projectName, username})
+    const validation = await validateData({
+      schema: "createProject",
+      data: req.body,
+    });
 
-
-    if(result.status === 409){
-      res.status(409).json({success: false, message: result.message})
+    if (validation.error === "ValidationError") {
+      return res
+        .status(400)
+        .json({ success: false, message: validation.message });
     }
 
-    res.status(200).json({success: true, message: req.user, data: result})
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Server Error"})
-  }
-}
+    const newProject = { ...validation, projectLeader: req.user.username };
 
-export const ProjectController = { getAllProjects, getByName, createProject, addPendingMember };
+    const result = await ProjectMethods.create(newProject);
+
+    if (result.error?.name === "SequelizeUniqueConstraintError") {
+      return res
+        .status(400)
+        .json({ success: false, message: "Nombre de proyecto ya usado" });
+    }
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Proyecto creado correctamente",
+        data: result,
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+const addPendingMember = async (
+  req: RequestWithUserData,
+  res: Response<ServerResponse>
+) => {
+  try {
+    const { projectName } = req.params;
+    const username = req.user.username;
+    const result = await ProjectMethods.addPendingMember({
+      projectName,
+      username,
+    });
+
+    if (result.status === 409) {
+      return res.status(409).json({ success: false, message: result.message });
+    }
+
+    res.status(200).json({ success: true, message: "El usuario ahora está en la lista de pendientes del proyecto", data: result });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const ProjectController = {
+  getAllProjects,
+  getByName,
+  createProject,
+  addPendingMember,
+};

@@ -12,7 +12,7 @@ const getAllProjects = async () => {
 
 const getByProjectName = async ({ projectName }: { projectName: string }) => {
   try {
-    return await ProjectModel.findOne({ where: { projectName }});
+    return await ProjectModel.findOne({ where: { projectName } });
   } catch (error) {
     console.log(error);
     return null;
@@ -45,37 +45,41 @@ const create = async ({
   }
 };
 
-
-const addPendingMember = async ({ projectName , username }: {projectName:string , username: string}) => {
+const addPendingMember = async ({
+  projectName,
+  username,
+}: {
+  projectName: string;
+  username: string;
+}): Promise<string | any> => {
   try {
-
     const project = await ProjectModel.findOne({
-      where:{projectName}
-    })
+      where: { projectName },
+    });
 
-    if(!project){
-      throw new Error("No existe un proyecto con ese nombre")
+    if (!project) {
+      throw new Error("No existe un proyecto con ese nombre");
     }
-    if(project.pendingMembersList.includes(username)){
-      return { status: 409,message: "El usuario ya cuenta con una solicitud para este proyecto"}
+    if (project.pendingMembersList.includes(username)) {
+      return {
+        status: 409,
+        message: "El usuario ya cuenta con una solicitud para este proyecto",
+      };
     }
 
-    project.pendingMembersList.push(username)
+    project.pendingMembersList.push(username);
 
-    const projectUpdated = await project.save();
+    const projectUpdated = await ProjectModel.update({pendingMembersList: project.pendingMembersList},{where: {projectName}});
 
-    return projectUpdated
-
+    return projectUpdated;
   } catch (error) {
-    return{ error};
+    return { error };
   }
-}
+};
 
-
-
-
-
-
-
-
-export const ProjectMethods = { getAllProjects, getByProjectName, create , addPendingMember};
+export const ProjectMethods = {
+  getAllProjects,
+  getByProjectName,
+  create,
+  addPendingMember,
+};
