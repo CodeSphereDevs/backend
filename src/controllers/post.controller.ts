@@ -16,6 +16,31 @@ const getAllPosts = async (req: Request, res:Response<ServerResponse> ) => {
 
 }
 
+
+
+    const getByUsername = async (req: Request, res: Response<ServerResponse>) => {
+        try {
+            
+            const {author} = req.params 
+            const result = await PostMethods.getByUsername({author});
+
+           
+            if (result === null) {
+                return res.status(500).json({ success: false, message: "Error fetching posts" });
+            }
+
+            if (result.length === 0) {
+                return res.status(404).json({ success: false, message: "Este usuario no tiene publicaciones" });
+            }
+            res.status(200).json({ success: true,  message: "", data: result});
+
+        } catch (error) {
+            
+            return res.status(500).json({success: true, message: "Server Error"})
+        }
+    }
+
+
 const createPost = async (req : RequestWithUserData, res : Response<ServerResponse>) => {
     try {
         const validation = await validateData({ schema: "createPost", data: req.body})
@@ -25,8 +50,7 @@ const createPost = async (req : RequestWithUserData, res : Response<ServerRespon
               .json({ success: false, message: validation.message})
         }
 
-        const newPost = { ...validation, author: req.user.username}
-        
+        const newPost = {...validation, author: req.user.username}
         const result = await PostMethods.create(newPost);
 
         if(result.error?.name === "SequializeUniqueConstraintError"){
@@ -44,4 +68,4 @@ const createPost = async (req : RequestWithUserData, res : Response<ServerRespon
 
 
 
-export const PostController = {getAllPosts, createPost}
+export const PostController = {getAllPosts, createPost, getByUsername}

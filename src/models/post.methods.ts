@@ -4,21 +4,30 @@ import { PostModel } from "./post.schema"
 
 
 const getAllPosts = async () => { 
-/* try {
-    return await PostModel.findAll();
-} catch (error) {
-    console.log(error);
-    return null
-} */
-}
-
-const getById = async ({id}:{id: string}) => { 
-   /*  try {
-        return await PostModel.findOne({where: {id}})
+    try {
+        return await PostModel.findAll();
     } catch (error) {
         console.log(error);
         return null
-    } */
+    } 
+}
+
+const getByUsername = async ({author}:{author: string}) => { 
+     try {
+        if (!author || typeof author !== 'string') {
+            throw new Error('Invalid author parameter');
+        }   
+        return PostModel.findAll({
+            where: {author},
+            offset: 0,
+            limit: 10
+        })  
+        
+        
+    } catch (error) {
+        console.log(error);
+        return null
+    } 
 }
 
 const create = async ({
@@ -29,13 +38,13 @@ const create = async ({
 
     try {
         const post = {
-            id: uuidv4() ,
+            id: uuidv4(),
             author,
             title,
-            content,
-            likes: [ ]
+            content,    
+            likes:[ ]
         }
-    
+        
         const postId = await PostModel.create(post);
         return postId
         
@@ -44,4 +53,4 @@ const create = async ({
     }
 }
 
-export const PostMethods = { getAllPosts, getById, create }
+export const PostMethods = { getAllPosts, getByUsername, create }

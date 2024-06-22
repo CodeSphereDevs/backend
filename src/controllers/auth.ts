@@ -45,7 +45,7 @@ const login = async (req: Request, res: Response<ServerResponse>) => {
       httpOnly: true,
       sameSite: "strict",
       maxAge: 15 * 24 * 60 * 60 * 1000,
-      secure: true,
+      secure: true,//VALOR POR DEFAULT TRUE
     });
     res.status(200).json({
       success: true,
