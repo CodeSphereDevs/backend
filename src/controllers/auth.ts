@@ -45,11 +45,7 @@ const login = async (req: Request, res: Response<ServerResponse>) => {
       httpOnly: true,
       sameSite: "strict",
       maxAge: 15 * 24 * 60 * 60 * 1000,
-<<<<<<< Updated upstream
       secure: true,//VALOR POR DEFAULT TRUE
-=======
-      secure: true,// VALOR ESPERADO TRUE
->>>>>>> Stashed changes
     });
     res.status(200).json({
       success: true,
