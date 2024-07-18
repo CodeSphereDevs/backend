@@ -45,12 +45,12 @@ const getAll = async () => {
   }
 };
 
-// const updateUser = async ({username, }) => {
-//   try{
-//     await UserModel.update({username: userData},{where: {username: }})
-//   }catch(error){
-//     return null;
-//   }
-// }
+const updateUser = async ({username, newData}:{username: string, newData:object}) => {
+  try{
+    // await UserModel.update({ newData},{where: {username: username}})
+  }catch(error){
+    return null;
+  }
+}
 
 export const UserMethods = { getByName, create, getAll };
