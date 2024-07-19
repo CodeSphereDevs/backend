@@ -6,3 +6,10 @@ export type User = {
     urlAvatar?: string;
 }
 
+export type UpdateUser = {
+    urlAvatar?: string;
+    title?: string;
+    details?:string;
+    technologies? :Array<string>;
+    links? :Array<string>;
+}

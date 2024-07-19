@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { UserModel } from "./user.schema";
-import { User } from "../types/user";
+import { UpdateUser, User } from "../types/user";
 import { hashPassword } from "../services/bcrypt";
 
 const getByName = async ({ username }: { username: string }) => {
@@ -45,12 +45,12 @@ const getAll = async () => {
   }
 };
 
-const updateUser = async ({username, newData}:{username: string, newData:object}) => {
+const updateUser = async ({username, newData}:{username: string, newData:UpdateUser}) => {
   try{
-    // await UserModel.update({ newData},{where: {username: username}})
+    return await UserModel.update({ ...newData },{where: {username: username}})
   }catch(error){
     return null;
   }
 }
 
-export const UserMethods = { getByName, create, getAll };
+export const UserMethods = { getByName, create, getAll, updateUser };

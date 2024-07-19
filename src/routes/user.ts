@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/", UserController.getAll);
 router.get("/:username", UserController.getByName);
-router.patch("/update", authenticate, UserController.updateUserProfile);
+router.patch("/", authenticate, UserController.updateUserProfile);
 
 
 export default router;

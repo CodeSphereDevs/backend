@@ -23,19 +23,31 @@ const createProjectSchema = Joi.object({
   projectName: Joi.string().min(5).max(60).required(),
   details: Joi.string().required(),
   technologies: Joi.array().items(Joi.string()).min(1).max(5).required(),
-  numMembers: Joi.number().min(2).max(6).required()
+  numMembers: Joi.number().min(2).max(6).required(),
 });
-
 
 const createPostSchema = Joi.object({
   title: Joi.string().min(3).max(40).required(),
-  content:Joi.string().required(),
-})
+  content: Joi.string().required(),
+});
 
+const updateUserSchema = Joi.object({
+  urlAvatar: Joi.string(),
+  title: Joi.string().min(3).max(40),
+  details: Joi.string().max(250),
+  technologies: Joi.array().items(Joi.string()).min(1).max(5),
+  links: Joi.array().items(Joi.string()).max(8),
+});
 
-const schemas = { login: loginSchema, signup: signupSchema, createProject: createProjectSchema, createPost: createPostSchema };
+const schemas = {
+  login: loginSchema,
+  signup: signupSchema,
+  createProject: createProjectSchema,
+  createPost: createPostSchema,
+  updateUser: updateUserSchema
+};
 
-type Schemas = "login" | "signup" | "createProject" | "createPost";
+type Schemas = "login" | "signup" | "createProject" | "createPost" | "updateUser";
 
 export const validateData = async ({
   schema,
