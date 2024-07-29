@@ -53,4 +53,30 @@ const updateUser = async ({username, newData}:{username: string, newData:UpdateU
   }
 }
 
-export const UserMethods = { getByName, create, getAll, updateUser };
+type PostAtUser = {
+  id:string;
+  title:string;
+}
+
+const addPostToUser = async ({username, newPost}:{username:string, newPost: PostAtUser} ) => {
+  try{
+    const user = await UserMethods.getByName({username});
+    if(!user){
+      console.log("esta entrando aca?")
+      return null;
+    }
+   
+    const userPosts = user.posts;
+    userPosts.unshift(newPost);
+
+    
+
+    return await UserMethods.updateUser({username, newData:{posts:userPosts}});
+
+  }
+  catch(error){
+    console.log(error)
+    return null;
+  }}
+
+export const UserMethods = { getByName, create, getAll, updateUser, addPostToUser };

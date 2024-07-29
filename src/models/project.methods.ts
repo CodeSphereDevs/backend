@@ -25,7 +25,7 @@ const create = async ({
   details,
   technologies,
   numMembers,
-}: Project): Promise<string | any> => {
+}: Project): Promise<string | any>  => {
   try {
     const project = {
       projectLeader,

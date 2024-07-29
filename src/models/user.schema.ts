@@ -7,6 +7,11 @@ import {
 } from "sequelize";
 import sequelize from "../services/database";
 
+type PostAtUser = {
+  id: string;
+  title: string;
+}
+
 class UserModel extends Model<
   InferAttributes<UserModel>,
   InferCreationAttributes<UserModel>
@@ -19,7 +24,7 @@ class UserModel extends Model<
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
   declare projects: Array<string>;
-  declare posts: Array<string>;
+  declare posts: Array<PostAtUser>;
   declare stats: Object;
   declare title: CreationOptional<string>;
   declare details: CreationOptional<string>;
@@ -57,7 +62,7 @@ UserModel.init(
       type: DataType.ARRAY(DataType.STRING),
     },
     posts: {
-      type: DataType.ARRAY(DataType.STRING),
+      type: DataType.ARRAY(DataType.JSONB),
     },
     stats: DataType.JSONB,
     title: {

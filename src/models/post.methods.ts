@@ -27,6 +27,15 @@ const getByUsername = async ({ author }: { author: string }) => {
   }
 };
 
+const getByTitle = async ({title}:{title: string}) => {
+  try{
+    return await PostModel.findOne({where: {title}});
+  }
+  catch(error){
+    return null;
+  }
+}
+
 const create = async ({
   author,
   title,
@@ -48,4 +57,4 @@ const create = async ({
   }
 };
 
-export const PostMethods = { getAllPosts, getByUsername, create };
+export const PostMethods = { getAllPosts, getByTitle, getByUsername, create };
